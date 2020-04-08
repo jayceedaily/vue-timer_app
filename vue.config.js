@@ -1,4 +1,4 @@
 module.exports = {
-    publicPath: '/vue-timer_app/',
-    // publicPath: '/'
+    // publicPath: '/vue-timer_app/',
+    publicPath: '/'
 }

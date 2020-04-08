@@ -1,10 +1,10 @@
 <template>
 <div class="">
 	<div class="card waves-effect waves-light col s12" @click="start = !start" style="border-radius:20px!important ;  box-shadow:none; cursor: pointer"  :class="start ? 'deep-purple accent-3 white-text' : 'deep-purple-text text-accent-3'">
-		<div class="card-content " style=" padding: 20px 35px;">
+		<div class="card-content " style=" padding: 20px 25px;">
 			<div class="row">
 
-				<div class="col s11">
+				<div class="col s12">
 					<h5 class="valign-wrapper flow-text">
 						<b>{{timer.name}}</b></h5>
 					<h1 style="margin-top:0; margin-bottom:0"><b>{{prettyTime(countDown.hours)}} {{prettyTime(countDown.minutes)}} {{prettyTime(countDown.seconds)}}</b></h1>
