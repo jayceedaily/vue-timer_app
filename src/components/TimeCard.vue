@@ -1,6 +1,6 @@
 <template>
 <div class="">
-	<div class="card waves-effect waves-light col s12" @click="start = !start" style="border-radius:20px!important ;  box-shadow:none; cursor: pointer"  :class="start ? 'deep-purple accent-3 white-text' : 'deep-purple-text text-accent-3'">
+	<div class="card col s12" style="border-radius:20px!important ;  box-shadow:none; "  :class="start ? 'deep-purple accent-3 white-text' : 'deep-purple-text text-accent-3'">
 		<div class="card-content " style=" padding: 20px 25px;">
 			<div class="row">
 
@@ -13,7 +13,14 @@
 	
 			</div>
 		</div>
-
+		<hr>
+		<div class="card-content center-align">
+			<div class="row" style="margin-bottom:0">
+				<div class="col s4"><i style="cursor:pointer" class="material-icons small" @click="destroy(timer)">delete</i></div>
+				<div class="col s4"><i style="cursor:pointer" class="material-icons small" @click="restart">refresh</i></div>
+				<div class="col s4"><i style="cursor:pointer" class="material-icons small" @click="start = !start">{{start ? 'pause' : 'play_arrow'}}</i></div>
+			</div>
+		</div>
 	</div>
 </div>
 </template>
@@ -52,6 +59,12 @@ export default {
 	},
 
 	methods: {
+
+		restart() {
+			this.countDown = Object.assign({}, this.timer.duration);
+
+			this.start = false;
+		},
 
 		countDownTimer() {
 
@@ -99,15 +112,15 @@ export default {
 		},
 
 		prettyTime(time){
-			if(time < 10 && time[0] != "0") {
-				return '0'+time
+			if(time < 10 &&( time[0] != "0" || time[0] == "")) {
+				return '0' + time
 			}
 
 			return time;
 		},
 		
 		destroy(item) {
-			console.log(item)
+			mutations.destroy(item);
 		}
 	}
 }
@@ -117,4 +130,11 @@ export default {
 	.card {
 		transition: all 0.2s ease-in!important;
 	}
+
+	
+hr {
+    border-top: none;
+    border-bottom: 1px solid rgba(0,0,0,0.1) ;
+    margin: 0;
+}
 </style>

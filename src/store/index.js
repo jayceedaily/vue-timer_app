@@ -21,5 +21,13 @@ export const mutations = {
         store.timers.splice(index, 1);
 
         mutations.prepend(item);
+    },
+
+    destroy: (item) => {
+        let index = store.timers.findIndex((_item) => _item.id == item.id);
+
+        store.timers.splice(index, 1);
+
+        localStorage.data = JSON.stringify(store.timers)
     }
 }

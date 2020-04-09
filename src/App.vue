@@ -38,9 +38,9 @@
 				</div>
 			
 			<div class="row">
-				<transition-group name="flip-list" tag="">
+				<transition-group name="list-complete" tag="">
 
-					<time-card class="list-item col s12 " v-for="item in timers" :key="item.id" :timer=item></time-card>
+					<time-card class="list-complete-item col s12 " v-for="item in timers" :key="item.id" :timer=item></time-card>
 				
 
 				</transition-group>
@@ -151,7 +151,7 @@ export default {
 			} else {
 
 				this.timers.unshift({
-					id: this.timers.length + 1,
+					id: this.makeid(12),
 					name: this.name,
 					duration: {
 						hours: this.hours,
@@ -173,7 +173,15 @@ export default {
 
 		},
 		
-
+ makeid(length) {
+   var result           = '';
+   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+   var charactersLength = characters.length;
+   for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+},
 		prettyTime(time){
 			if(time < 10 && time[0] != "0") {
 				return '0' + time
@@ -186,20 +194,7 @@ export default {
 </script>
 <style>
 
-.flip-list-move {
-  transition: transform 1s;
-}
-	.list-item {
-		display: inline-block;
-		/* margin-right: 10px; */
-	}
-	.list-enter-active, .list-leave-active {
-		transition: all 0.5s;
-	}
-	.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
-		opacity: 0;
-		transform: translateY(-30px);
-	}
+
 	/* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -237,5 +232,18 @@ input.mytimename {
 }
 
 
+.list-complete-item {
+  transition: all 1s;
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-complete-enter, .list-complete-leave-to
+/* .list-complete-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-complete-leave-active {
+  position: absolute;
+}
 
 </style>
