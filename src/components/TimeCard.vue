@@ -13,10 +13,7 @@
 	
 			</div>
 		</div>
-		<hr>
-		<div class="card-content">
-			
-		</div>
+
 	</div>
 </div>
 </template>
