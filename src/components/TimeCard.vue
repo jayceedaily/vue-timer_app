@@ -5,6 +5,7 @@
 			<div class="row">
 
 				<div class="col s12">
+				<!-- <i class="material-icons right" @click="destroy(timer)">close</i> -->
 					<h5 class="valign-wrapper flow-text">
 						<b>{{timer.name}}</b></h5>
 					<h1 style="margin-top:0; margin-bottom:0"><b>{{prettyTime(countDown.hours)}} {{prettyTime(countDown.minutes)}} {{prettyTime(countDown.seconds)}}</b></h1>
@@ -12,11 +13,16 @@
 	
 			</div>
 		</div>
+		<hr>
+		<div class="card-content">
+			
+		</div>
 	</div>
 </div>
 </template>
 <script>
-
+import M from 'materialize-css';
+import {mutations} from '../store';
 export default {
 	name: "TimeCard",
 	props: ['timer'],
@@ -36,6 +42,8 @@ export default {
 		start(){
 
 			if(this.start){
+				mutations.moveToTop(this.timer)
+
 				this.countDownTimer();
 			} else {
 				clearTimeout(this.realtime)
@@ -87,6 +95,7 @@ export default {
 
 					this.start = false;
 
+					M.toast({html:this.timer.name + ' has ended'})
 				}
 
 			}, 1000)
@@ -99,6 +108,10 @@ export default {
 
 			return time;
 		},
+		
+		destroy(item) {
+			console.log(item)
+		}
 	}
 }
 </script>

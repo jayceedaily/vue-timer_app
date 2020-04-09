@@ -1,12 +1,13 @@
 <template>
 	<div id="app">
 		<div class="container" style="margin-top:50px">
-			
+		
+      
 			
 				<div class="row">
 					<div class="col s12">
-						<div class="card" style="padding-top:50px">
-							<div class="card-content">
+						<div class="card" style="padding-top:10px" >
+							<div class="card-content" style=" padding: 20px 30px;">
 								<form action="" @submit.prevent="addTimer">
 									<div class="row">
 										<div class="col s12">
@@ -36,9 +37,8 @@
 					</div>
 				</div>
 			
-			
 			<div class="row">
-				<transition-group name="list" tag="">
+				<transition-group name="flip-list" tag="">
 
 					<time-card class="list-item col s12 " v-for="item in timers" :key="item.id" :timer=item></time-card>
 				
@@ -52,7 +52,7 @@
 
 <script>
 import M from 'materialize-css';
-
+import {store, mutations} from './store';
 import TimeCard from  './components/TimeCard'
 
 export default {
@@ -71,18 +71,23 @@ export default {
 			seconds: null,
 		
 
-			timers: [
-				{
-					id:1,
-					name: "Laundry",
-					duration: {
-						hours: 0,
-						minutes: 30,
-						seconds: 0,
-					},
-					start_at: {},
-				},
-			]
+			// timers: localStorage.data == null? [{
+			// 		id:1,
+			// 		name: "Make Coffee",
+			// 		duration: {
+			// 			hours: 0,
+			// 			minutes: 3,
+			// 			seconds: 30,
+			// 		},
+			// 		start_at: {},
+			// 	},] : JSON.parse(localStorage.data)
+			
+		}
+	},
+
+	computed: {
+		timers() {
+			return store.timers
 		}
 	},
 
@@ -101,10 +106,22 @@ export default {
 		}
 	},
 	created: function() {
-	
+		mutations.load(localStorage.data == null? [{
+					id:1,
+					name: "Make Coffee",
+					duration: {
+						hours: 0,
+						minutes: 3,
+						seconds: 30,
+					},
+					start_at: {},
+				},] : JSON.parse(localStorage.data));
 	},
 
 	methods: {
+
+		// ...{load: mutations.load},
+
 		addTimer() {
 
 			if(this.hours == null) {
@@ -119,7 +136,7 @@ export default {
 				this.seconds = 0;
 			}
 
-			if(this.hours == 0 && this.minutes == 0 && this.minutes == 0)
+			if(this.hours == 0 && this.minutes == 0 && this.seconds == 0)
 			{
 				this.hours = null;
 
@@ -142,6 +159,8 @@ export default {
 						seconds: this.seconds
 					},
 				})
+
+				localStorage.data = JSON.stringify(this.timers)
 
 			}
 
@@ -166,12 +185,16 @@ export default {
 }
 </script>
 <style>
+
+.flip-list-move {
+  transition: transform 1s;
+}
 	.list-item {
 		display: inline-block;
-		margin-right: 10px;
+		/* margin-right: 10px; */
 	}
 	.list-enter-active, .list-leave-active {
-		transition: all 1s;
+		transition: all 0.5s;
 	}
 	.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
 		opacity: 0;
@@ -214,15 +237,5 @@ input.mytimename {
 }
 
 
-	.slide-fade-enter-active {
-	transition: all .3s ease;
-	}
-	.slide-fade-leave-active {
-	transition: all .3s ease;
-	}
-	.slide-fade-enter, .slide-fade-leave-to
-	/* .slide-fade-leave-active below version 2.1.8 */ {
-	transform: translateY(10px);
-	opacity: 0;
-	}
+
 </style>
